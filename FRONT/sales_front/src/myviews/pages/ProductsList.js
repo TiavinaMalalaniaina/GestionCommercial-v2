@@ -1,9 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
+  CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
+  CContainer,
+  CFormSelect,
   CRow,
   CTable,
   CTableBody,
@@ -13,11 +16,20 @@ import {
 } from '@coreui/react';
 import API_CONFIG from 'src/apiconfig';
 import { CChartDoughnut, CChartLine } from '@coreui/react-chartjs';
+import DeptProductCard from '../cards/DeptProductCard';
+import RequestProformaCard from '../cards/RequestProformaCard';
+import Select from 'react-select';
+import MultiSelect from '../input/MultiSelect';
 
 const ProductsList = () => {
   const [data, setData] = useState([]);
-  const [dataCurve, setDataCurve] = useState([]);
-  const random = () => Math.round(Math.random() * 100)
+  const [articles, setArticles] = useState([
+    {value: 1, label: "Article 1"},
+    {value: 2, label: "Article 2"},
+    {value: 3, label: "Article 3"},
+    {value: 4, label: "Article 4"}
+  ])
+  const [selectedArticle, setSelectedArticle] = useState([])
 
   const test = [1,2,3,4,5]
 
@@ -37,6 +49,10 @@ const ProductsList = () => {
         setData(fakeData)
       })
 }, []);
+
+  const handleMultiSelect=(selected)=>{
+    setSelectedArticle(selected);
+  }
 
   const produits = useMemo(() => Array.from(new Set(data.map((item) => item.produit))), [data]);
   const departements = useMemo(() => Array.from(new Set(data.map((item) => item.departement))), [data]);
@@ -78,41 +94,34 @@ const ProductsList = () => {
           </CTable>
         </CCardBody>
       </CCard>
-
-      {/* <CRow>
-        {test.map(t =>
-        <CCol xs={6}>
-        <CCard className="mb-4">
-          <CCardHeader>Line Chart</CCardHeader>
-          <CCardBody>
-            <CChartLine
-              data={{
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [
-                  {
-                    label: 'My First dataset',
-                    backgroundColor: 'rgba(220, 220, 220, 0.2)',
-                    borderColor: 'rgba(220, 220, 220, 1)',
-                    pointBackgroundColor: 'rgba(220, 220, 220, 1)',
-                    pointBorderColor: '#fff',
-                    data: [random(), random(), random(), random(), random(), random(), random()],
-                  },
-                  {
-                    label: 'My Second dataset',
-                    backgroundColor: 'rgba(151, 187, 205, 0.2)',
-                    borderColor: 'rgba(151, 187, 205, 1)',
-                    pointBackgroundColor: 'rgba(151, 187, 205, 1)',
-                    pointBorderColor: '#fff',
-                    data: [random(), random(), random(), random(), random(), random(), random()],
-                  },
-                ],
-              }}
-            />
-          </CCardBody>
-        </CCard>
-      </CCol>
-          )}
-      </CRow> */}
+      <CCard className='mb-4'>
+        <CCardBody>
+          <CRow>
+            <CCol xs={12}>
+              <MultiSelect
+                options={articles}
+                selectedOptions={selectedArticle}
+                onChange={handleMultiSelect}
+              />
+            </CCol>
+          </CRow>
+        </CCardBody>
+      </CCard>
+      <CRow>
+        <CCol xs={8}>
+          <CRow>
+            <DeptProductCard/>
+            <DeptProductCard/>
+            <DeptProductCard/>
+            <DeptProductCard/>
+            <DeptProductCard/>
+            <DeptProductCard/>
+          </CRow>
+        </CCol>
+        <CCol xs={4}>
+            <RequestProformaCard/>
+        </CCol>
+      </CRow>
 
     </div>
   );

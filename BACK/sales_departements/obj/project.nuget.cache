@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YDCqtVKvDDpHSbGZ/HS9OU3U+tqjnlhUU/J/b0LI1KH7MyfgnO705bZfFoyDWiGsFgilojz+K0LHWEQ/hM5qig==",
+  "dgSpecHash": "JcC4ytEz522OTdWD+hHA3mangeP4yK1DIPvtb8As94OonSdgDAu5rJH/KdRLEEFgfAG9krxUHmAJS20xbpPu/A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tiavi\\Desktop\\Other\\GestionCommercial\\BACK\\sales_departements\\sales_departements.csproj",
+  "projectFilePath": "C:\\Users\\tiavi\\Desktop\\GestionCommercial-v2\\BACK\\sales_departements\\sales_departements.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tiavi\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\tiavi\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",

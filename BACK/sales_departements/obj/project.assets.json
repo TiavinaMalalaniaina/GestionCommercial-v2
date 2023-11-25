@@ -1487,11 +1487,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tiavi\\Desktop\\Other\\GestionCommercial\\BACK\\sales_departements\\sales_departements.csproj",
+      "projectUniqueName": "C:\\Users\\tiavi\\Desktop\\GestionCommercial-v2\\BACK\\sales_departements\\sales_departements.csproj",
       "projectName": "sales_departements",
-      "projectPath": "C:\\Users\\tiavi\\Desktop\\Other\\GestionCommercial\\BACK\\sales_departements\\sales_departements.csproj",
+      "projectPath": "C:\\Users\\tiavi\\Desktop\\GestionCommercial-v2\\BACK\\sales_departements\\sales_departements.csproj",
       "packagesPath": "C:\\Users\\tiavi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tiavi\\Desktop\\Other\\GestionCommercial\\BACK\\sales_departements\\obj\\",
+      "outputPath": "C:\\Users\\tiavi\\Desktop\\GestionCommercial-v2\\BACK\\sales_departements\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tiavi\\AppData\\Roaming\\NuGet\\NuGet.Config",
