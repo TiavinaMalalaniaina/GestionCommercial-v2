@@ -124,4 +124,23 @@ public class ProformaController : Controller
 
         return new Bag(exception, data);
     }
+
+    [HttpGet]
+    [Route("get-proformas-with-products")]
+    public Bag GetProformaWithProductsList(List<string> productId)
+    {
+        string? exception = null;
+        object? data = null;
+        try
+        {
+            SalesDepartementsContext context = new();
+            data = new Proforma().GetProformaWithProductsList(context, productId);
+        }
+        catch (Exception e)
+        {
+            exception = e.Message;
+        }
+
+        return new Bag(exception, data);
+    }
 }

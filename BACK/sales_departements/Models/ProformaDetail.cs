@@ -46,4 +46,74 @@ public partial class ProformaDetail
         }
         return p;
     }
+    
+    public bool IsAlreadyTaken(List<Product> products)
+    {
+        foreach (var product in products)
+        {
+            if (product.ProductId.Equals(ProductId))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public bool IsAlreadyTakenProforma(List<Proforma> proformas)
+    {
+        foreach (var proforma in proformas)
+        {
+            if (proforma.ProformaId.Equals(ProformaId))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public List<Product> GetListProductsAtProformaDetails(SalesDepartementsContext context)
+    {
+        List<Product> products = new List<Product>();
+        List<ProformaDetail> proformaDetails = context.ProformaDetails.ToList();
+        foreach (var proformaDetail in proformaDetails)
+        {
+            if (!proformaDetail.IsAlreadyTaken(products))
+            {
+                Product product = new Product().GetProduct(context, proformaDetail.ProductId);
+                products.Add(product);
+            }
+        }
+
+        return products;
+    }
+    
+    public List<Proforma> GetListProformaAtProformaDetails(SalesDepartementsContext context, List<string> proformaDetailsArg)
+    {
+        List<Proforma> proformas = new List<Proforma>();
+        List<ProformaDetail> proformaDetails = GetProformaDetailsByProformaDetailsId(context, proformaDetailsArg);
+        foreach (var proformaDetail in proformaDetails)
+        {
+            if (!proformaDetail.IsAlreadyTakenProforma(proformas))
+            {
+                Proforma proforma = new Proforma().GetProforma(context, proformaDetail.ProformaId);
+                proformas.Add(proforma);
+            }
+        }
+
+        return proformas;
+    }
+
+    public List<ProformaDetail> GetProformaDetailsByProformaDetailsId(SalesDepartementsContext context,
+        List<string> proformaDetailsId)
+    {
+        List<ProformaDetail> proformaDetails = new List<ProformaDetail>();
+        foreach (var prf in proformaDetailsId)
+        {
+            ProformaDetail proformaDetail = context.ProformaDetails.Find(prf);
+            proformaDetails.Add(proformaDetail);
+        }
+
+        return proformaDetails;
+    }
+    
 }

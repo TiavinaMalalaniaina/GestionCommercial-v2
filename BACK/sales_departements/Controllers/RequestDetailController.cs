@@ -33,4 +33,29 @@ public class RequestDetailController : Controller
 
         return new Bag(exception, data);
     }
+    
+    [HttpGet]
+    [Route("get-all-products-requested")]
+    public Bag GetAllProductsRequested() {
+        string? exception = null;
+        object? data = null;
+        NpgsqlConnection connection = null;
+        try
+        {
+            SalesDepartementsContext context = new ();
+            data = new RequestDetail().GetListProductsRequested(context);
+        }
+        catch (Exception ex)
+        {
+            exception = ex.Message;
+        }
+        finally {
+            if (connection != null)
+            {
+                connection.Close();
+            }
+        }
+
+        return new Bag(exception, data);
+    }
 }

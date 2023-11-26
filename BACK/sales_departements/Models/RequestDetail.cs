@@ -124,4 +124,35 @@ public partial class RequestDetail
             requestDetail.Treated = 2;
         }
     }
+
+    public bool IsAlreadyTaken(List<Product> products)
+    {
+        foreach (var product in products)
+        {
+            if (product.ProductId.Equals(ProductId))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public List<Product> GetListProductsRequested(SalesDepartementsContext context)
+    {
+        List<Product> products = new List<Product>();
+        List<RequestDetail> requestDetails = context.RequestDetails.ToList();
+        foreach (var requestDetail in requestDetails)
+        {
+            if (!requestDetail.IsAlreadyTaken(products))
+            {
+                Product product = new Product().GetProduct(context, requestDetail.ProductId);
+                products.Add(product);
+            }
+        }
+
+        return products;
+    }
+
+    
+    
 }

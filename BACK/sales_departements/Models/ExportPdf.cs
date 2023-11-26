@@ -8,17 +8,26 @@ namespace sales_departements.Models
     {
         public void CreatePdf(string filePath, string content)
         {
-            Document document = new Document();
-            document.Pages.Add();
+            try
+            {
+                Document document = new Document();
+                Page page = document.Pages.Add();
 
-            TextFragment textFragment = new TextFragment(content);
+                TextFragment textFragment = new TextFragment(content);
 
-            // // Ajouter des styles au texte (par exemple, la police, la taille de police, la couleur, etc.)
-            textFragment.TextState.Font = FontRepository.FindFont("Arial");
-            textFragment.TextState.FontSize = 12;
-            textFragment.TextState.ForegroundColor = Color.Green;
+                // // Ajouter des styles au texte (par exemple, la police, la taille de police, la couleur, etc.)
+                //textFragment.TextState.Font = FontRepository.FindFont("Arial");
+                textFragment.TextState.FontSize = 12;
+                textFragment.TextState.ForegroundColor = Color.Green;
+                page.Paragraphs.Add(textFragment);
 
-            document.Save(filePath);
+                document.Save(filePath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
 
         public void CreatePdfWithTable(string filePath)

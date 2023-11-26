@@ -19,6 +19,18 @@ public partial class PurchaseOrderDetail
 
     public virtual Product? Product { get; set; }
 
+    public PurchaseOrderDetail(string? productId, double? quantity, decimal? price)
+    {
+        ProductId = productId;
+        Quantity = quantity;
+        Price = price;
+    }
+
+    public PurchaseOrderDetail()
+    {
+        
+    }
+
     public List<PurchaseOrderDetail> GetPurchaseOrderDetailsByPurchaseOrderId(SalesDepartementsContext context, string PurchaseOrderId) {
         List<PurchaseOrderDetail> purchaseOrderDetails = context.PurchaseOrderDetails.Where(p => p.PurchaseOrderId == PurchaseOrderId).ToList();
         for (var i = 0; i < purchaseOrderDetails.Count; i++)
