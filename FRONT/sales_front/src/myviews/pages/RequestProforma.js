@@ -86,9 +86,9 @@ const RequestProforma=()=> {
                             <CCardTitle>Fournisseur</CCardTitle>
                             <div className="mb-3">
                                 <CFormLabel htmlFor="request-form-product">Produit</CFormLabel>
-                                <CFormSelect 
-                                aria-label="Default select example" 
-                                name='product' 
+                                <CFormSelect
+                                aria-label="Default select example"
+                                name='product'
                                 onChange={handleSupplierChange}
                                 >
                                 <option>Choisissez un fournisseur</option>
@@ -105,7 +105,7 @@ const RequestProforma=()=> {
                 </CCol>
             </CRow>
             <RequestProformaForm supplier={supplier} />
-                        
+
         </>
     )
 }

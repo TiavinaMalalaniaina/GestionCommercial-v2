@@ -109,7 +109,7 @@ const RequestProformaCard = ({ proforma }) => {
         )}
       </CCardBody>
       <CCardFooter className='text-center'>
-        <CButton color='primary'>Prévisualiser le proforma</CButton>
+        <CButton color='primary'>Prévisualiser la demande</CButton>
       </CCardFooter>
     </CCard>
   );

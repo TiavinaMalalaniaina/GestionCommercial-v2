@@ -1,128 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import {
-  CContainer,
-  CTable,
-  CTableBody,
-  CTableHead,
-  CTableRow,
-  CTableHeaderCell,
-  CTableDataCell,
-  CButton,
-  CListGroup,
-  CListGroupItem,
-  CCard,
-  CCardBody,
-  CCardHeader,
-} from '@coreui/react';
-import API_CONFIG from 'src/apiconfig';
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
+import { useState } from "react";
+import ListProductSelect from "../forms/ListProductSelect";
+import ProductDeptTable from "../tables/ProductDeptTable";
+import PurchaseOrderTable from "../tables/PurchaseOrderTable";
+import Proforma from "./Proforma";
 
-const RequestPurchaseOrder = () => {
-  const [allProducts, setAllProducts] = useState([]);
-  const [selectedProducts, setSelectedProducts] = useState([]);
+const RequestPurchaseOrder=()=>{
 
-  const handleAddProduct = (product) => {
-    const productIndex = allProducts.findIndex((p) => p.productId === product.productId);
+  const [products, setProducts] = useState([
+    {value: 1, label: "product 1"},
+    {value: 2, label: "product 2"},
+    {value: 3, label: "product 3"},
+    {value: 4, label: "product 4"},
+  ])
+  const [productsSelected, setProductsSelected] = useState([])
 
-    if (productIndex !== -1) {
-      const updatedProducts = [...allProducts];
-      updatedProducts.splice(productIndex, 1);
-
-      setAllProducts(updatedProducts);
-      setSelectedProducts([...selectedProducts, product]);
-    }
-  };
-
-  const handleRemoveProduct = (product) => {
-    const updatedList = selectedProducts.filter((p) => p.productId !== product.productId);
-    setSelectedProducts(updatedList);
-
-    setAllProducts([...allProducts, product]);
-  };
-
-  const handleValidateProducts = () => {
-    console.log('Produits validés:', selectedProducts);
-    const models = {
-      productIds: []
-    }
-    selectedProducts.forEach(product => {
-      models.productIds.push(product.productId)
-    });
-    const requestOption = {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(models)
-    }
-    fetch(API_CONFIG.SEND_PURCHASE_ORDER, requestOption)
-    .then(res => res.json())
-  };
-
-  useEffect(()=>{
-    fetch(API_CONFIG.NECESSARY_PRODUCT)
-      .then(res => res.json())
-      .then(res => {
-        setAllProducts(res.data)
-      })
-  },[])
+  const handleChangeProductInput=(selected)=>{
+    setProductsSelected(selected)
+  }
 
   return (
-    <CContainer>
-      <CCard className='mb-4'>
-        <CCardHeader>
-          <h2>Liste des Produits</h2>
-        </CCardHeader>
-        <CCardBody>
-          <CTable striped>
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell>Product</CTableHeaderCell>
-                <CTableHeaderCell>Quantity</CTableHeaderCell>
-                <CTableHeaderCell>Action</CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {allProducts.map((product) => (
-                <CTableRow key={product.productId}>
-                  <CTableDataCell>{product.productName}</CTableDataCell>
-                  <CTableDataCell>{product.quantity}</CTableDataCell>
-                  <CTableDataCell>
-                    <CButton
-                      color="success"
-                      onClick={() => handleAddProduct(product)}
-                      disabled={selectedProducts.some((p) => p.productId === product.productId)}
-                    >
-                      {selectedProducts.some((p) => p.productId === product.productId) ? 'Added' : 'Add'}
-                    </CButton>
-                  </CTableDataCell>
-                </CTableRow>
-              ))}
-            </CTableBody>
-          </CTable>
-        </CCardBody>
-      </CCard>
-
-      <CCard className='mb-4'>
-        <CCardHeader>
-          <h2>Produits Sélectionnés</h2>
-        </CCardHeader>
-        <CCardBody>
-          <CListGroup>
-            {selectedProducts.map((selectedProduct, index) => (
-              <CListGroupItem key={index}>
-                {selectedProduct.productName}{' --> '}{selectedProduct.quantity}
-                <CButton color="danger" onClick={() => handleRemoveProduct(selectedProduct)}>
-                  Remove
-                </CButton>
-              </CListGroupItem>
-            ))}
-          </CListGroup>
-
-          <CButton color="primary" onClick={handleValidateProducts}>
-            Valider les produits
-          </CButton>
-        </CCardBody>
-      </CCard>
-    </CContainer>
-  );
-};
+    <div>
+      <CRow className="mb-4">
+        <CCol xs={3}>
+          <CCard>
+            <CCardBody>
+              <ListProductSelect
+                options={products}
+                selectedOptions={productsSelected}
+                onChange={handleChangeProductInput}
+                />
+            </CCardBody>
+          </CCard>
+        </CCol>
+        <CCol>
+          <CCard>
+            <CCardHeader>
+              <CRow>
+                <CCol>
+                  Listes des produits à commander:
+                </CCol>
+                <CCol className="text-end">
+                  <CButton>Prévisualiser</CButton>
+                </CCol>
+              </CRow>
+            </CCardHeader>
+            <CCardBody>
+              <PurchaseOrderTable/>
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+      <CRow>
+        <CCol xs={3}>
+          <CCard>
+            <CCardBody>
+              <ProductDeptTable/>
+            </CCardBody>
+          </CCard>
+        </CCol>
+        <CCol xs={9} className='proformas'>
+          <CCardBody>
+            <CRow>
+              <CCol xs={6}>
+                <Proforma/>
+              </CCol>
+              <CCol xs={6}>
+                <Proforma/>
+              </CCol>
+              <CCol xs={6}>
+                <Proforma/>
+              </CCol>
+              <CCol xs={6}>
+                <Proforma/>
+              </CCol>
+            </CRow>
+          </CCardBody>
+        </CCol>
+      </CRow>
+    </div>
+  )
+}
 
 export default RequestPurchaseOrder;

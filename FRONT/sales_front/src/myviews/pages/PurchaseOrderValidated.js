@@ -7,6 +7,28 @@ import { toLetter } from 'src/utils/util';
 const PurchaseOrder = ({ order }) => {
 
   return (
+    <CRow>
+        <CCol xs={3}>
+          <CCard>
+            <CCardBody>
+              <CTable>
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell>Ref</CTableHeaderCell>
+                    <CTableHeaderCell>Date</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  {}
+                  <CTableRow>
+                    <CTableDataCell>#4565</CTableDataCell>
+                    <CTableDataCell>2022-02-20</CTableDataCell>
+                  </CTableRow>
+                </CTableBody>
+              </CTable>
+            </CCardBody>
+          </CCard>
+        </CCol>
     <CCard className='mb-4'>
       <CCardHeader>
         <h2>Commande d'Achat #{order.purchaseOrderId}</h2>
@@ -53,6 +75,7 @@ const PurchaseOrder = ({ order }) => {
         <p> Montant total arrété à la somme de <strong>{toLetter(calculateTotal(order.purchaseOrderDetails) * 1.2)} Ariary</strong></p>
       </CCardBody>
     </CCard>
+    </CRow>
   );
 };
 
