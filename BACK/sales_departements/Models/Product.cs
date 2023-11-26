@@ -27,4 +27,6 @@ public partial class Product
     public Product GetProduct(SalesDepartementsContext context, string productId) {
         return context.Products.Find(productId);
     }
+    
+    
 }

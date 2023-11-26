@@ -1,0 +1,11 @@
+-OK1     GetListProductsRequested                maka ny produit nocommandina rehetra
+-OK1     GetRequestsWithProductsList             mampiditra article(list produit) de mamoaka ny demandeny isaka ny departement
+-Rehefa cauchena ilay produit de de mamoaka tableau avec quantite total isaka ny produit
+-mandefa email any @ fournisseur
+
+-OK1     GetListProductsAtProformaDetails        mamoaka produit anaty proforma rehetra
+-OK1     GetProformaWithProductsList             mamoaka my proforma rehetra izay misy ny produits selectena
+-OK      creation bon de commande CreatePurchaseOder(List<ProformaDetailId> )
+        -groupena par proforma dia mamoaka bon de commande par request
+-OK1                                              mamoaka liste bon de commande
+-OK1     GetPurchaseOrderById                     Isaka ny mselect bon de commande de mipoitra ny detailny

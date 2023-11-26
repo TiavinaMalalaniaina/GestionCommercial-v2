@@ -100,4 +100,50 @@ public partial class Request
         }
         return requests;
     }
+    
+    public bool IsAlreadyTaken(List<Request> requests, Request request)
+    {
+        foreach (var requestV in requests)
+        {
+            if (request.RequestId.Equals(request.RequestId))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    
+    public List<Request> GetRequestsWithProductsList(SalesDepartementsContext context, List<string> productIds)
+    {
+        List<Request> requests = GetRequestsValidated(context);
+        List<Request> requestsReturn = new List<Request>();
+        foreach (var product in productIds)
+        {
+            foreach (var request in requests)
+            {
+                if (!IsAlreadyTaken(requestsReturn, request) && IsProductInRequest(product, request))
+                {
+                    requestsReturn.Add(request);
+                }
+            }
+        }
+
+        return requestsReturn;
+    }
+
+    public bool IsProductInRequest(string productId, Request request)
+    {
+        List<RequestDetail> requestDetails = request.RequestDetails;
+        foreach (var requestDetail in requestDetails)
+        {
+            if (requestDetail.ProductId.Equals(productId))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -154,7 +154,26 @@ public class RequestController : Controller
 
         return JsonConvert.SerializeObject(bag);
     }
+    
+    [HttpGet]
+    [Route("get-requests-with-products-list")]
+    public Bag GetRequestsWithProductsList(List<string> productId)
+    {
+        string? exception = null;
+        object? data = null;
+        try
+        {
+            SalesDepartementsContext context = new SalesDepartementsContext();
+            data = new Request().GetRequestsWithProductsList(context, productId);
+        }
+        catch (Exception e)
+        {
+            exception = e.Message;
+        }
+        Bag bag = new Bag(exception, data);
 
+        return bag;
+    }
     // [HttpGet]
     // [Route("add-in-request-detail")]
     // public void AddInRequestDetail(string product_id, int quantity, string reason) {
