@@ -96,6 +96,38 @@ public class PurchaseOrderController : Controller
         }
         return new Bag(exception, data);
     }
+    
+    [HttpGet]
+    [Route("get-one-by-id")]
+    public Bag GetPurchaseOrderById(string purchaseOrderId) {
+        string? exception = null;
+        object? data = null;
+        try
+        {
+            SalesDepartementsContext context = new ();
+            data = new PurchaseOrder().GetPurchaseOrderById(context, purchaseOrderId);
+        }
+        catch (Exception e)
+        {
+            exception = e.Message;
+        }
+        return new Bag(exception, data);
+    }
 
-
+    [HttpGet]
+    [Route("create-by-each-proforma")]
+    public Bag CreatePurchaseOrderEachProforma(List<string> proformaDetailsId) {
+        string? exception = null;
+        object? data = null;
+        try
+        {
+            SalesDepartementsContext context = new ();
+            new PurchaseOrder().CreatePurchaseOrderEachProforma(context, proformaDetailsId);
+        }
+        catch (Exception e)
+        {
+            exception = e.Message;
+        }
+        return new Bag(exception, data);
+    }
 }
