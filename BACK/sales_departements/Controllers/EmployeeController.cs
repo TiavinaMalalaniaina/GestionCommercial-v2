@@ -26,7 +26,6 @@ public class EmployeeController : Controller
             strings = e.Message;
         }
 
-        Console.WriteLine(strings);
         return new Bag(strings, data);
     }
 }
