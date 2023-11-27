@@ -77,6 +77,19 @@ public partial class Request
         }
         return requestsValidatedByDepartment;
     }
+    
+    
+    public List<Request> GetRequestsValidatedByDepartementId(SalesDepartementsContext context, string departmentId) {
+        List<Request> requestsValidated = GetRequestsValidated(context);
+        List<Request> requestsValidatedByDepartment = new();
+        foreach (Request request in requestsValidated)
+        {
+            if (request.DepartmentId.Equals(departmentId))
+                requestsValidatedByDepartment.Add(request);
+        }
+        return requestsValidatedByDepartment;
+    }
+    
     public List<Request> GetRequestsNoValidatedByDepartement(SalesDepartementsContext context, string employeeId) {
         List<Request> requestsNoValidated = GetRequestsNoValidated(context);
         Employee employee = new Employee().GetEmployee(context, employeeId);
