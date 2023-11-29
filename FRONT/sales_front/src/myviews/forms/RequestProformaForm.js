@@ -1,45 +1,27 @@
 import { CButton, CCard, CCardBody, CCardTitle, CCol, CForm, CFormInput, CFormLabel, CFormSelect, CFormTextarea, CInputGroup, CInputGroupText, CRow, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from "@coreui/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import API_CONFIG from "src/apiconfig"
 import { toDictProduct } from "src/utils/dict"
 
 const RequestProformaForm=({supplier})=>{
-    const s = {
-        supplierId: 1,
-        name: 'Tiavina',
-        contactPhone: '00.0212115',
-        contactEmail: 'sdfdsfds@gmail.com',
-        address: 'sdlkjeifizhfnio',
-        products: [
-            {
-                productId: 1,
-                productName: 'P1'
-            },
-            {
-                productId: 2,
-                productName: 'P2'
-            },
-            {
-                productId: 3,
-                productName: 'P3'
-            },
-            {
-                productId: 4,
-                productName: 'P4'
-            },
-        ]
-    }
-    const [productsSupplier, setProductsSupplier] = useState(s.products)
+    const [productsSupplier, setProductsSupplier] = useState([])
     const [products, setProducts] = useState([])
     const allProducts = toDictProduct(productsSupplier)
+
+    useEffect(()=>{
+      fetch(API_CONFIG.ALL_PRODUCT)
+      .then(res => res.json())
+      .then(res => setProductsSupplier)
+    }, [])
 
     const handleSubmit=(e)=>{
         e.preventDefault()
         const formData = new FormData(e.target)
         setProducts([
             ...products,
-            { 
+            {
                 productId: formData.get("productId"),
-                quantity: formData.get("quantity"), 
+                quantity: formData.get("quantity"),
             }
         ])
     }
@@ -59,7 +41,7 @@ const RequestProformaForm=({supplier})=>{
                             </CTableRow>
                         </CTableHead>
                         <CTableBody>
-                            {products.map((product, index) => 
+                            {products.map((product, index) =>
                             <CTableRow>
                                 <CTableDataCell>{index+1}</CTableDataCell>
                                 <CTableDataCell>{allProducts[product.productId]}</CTableDataCell>
@@ -84,12 +66,12 @@ const RequestProformaForm=({supplier})=>{
                                 )}
                                 </CFormSelect>
                             </div>
-                            
+
                             <div className="mb-4">
                                 <CFormLabel className="visually-hidden" htmlFor="inlineFormInputGroupUsername">Quantité</CFormLabel>
                                 <CFormInput type="number" id="inlineFormInputGroupUsername" placeholder="Quantité" name="quantity"/>
                             </div>
-                            
+
                             <div className="mb-4">
                                 <CButton type="submit">Ajouter</CButton>
                             </div>

@@ -18,6 +18,8 @@ const API_CONFIG={
     PURCHASE_ORDERS_VALIDATED: BASE_URL + "purchase-order/get-all-validated",
     PURCHASE_ORDERS_NO_VALIDATED: BASE_URL + "purchase-order/get-all-no-validated",
     REQUEST_CURVE: BASE_URL + "request/getAllByProducts",
-    REQUEST_SELF_SENDED: BASE_URL + "request/get-all-requests-send-by-self"
+    REQUEST_SELF_SENDED: BASE_URL + "request/get-all-requests-send-by-self",
+    PROFORMA_PRODUCTS: BASE_URL + "proforma/get-proformas-with-products",
+    PURCHASE_ORDERS_CREATE: BASE_URL + "purchase-order/create-by-each-proforma"
 }
 export default API_CONFIG

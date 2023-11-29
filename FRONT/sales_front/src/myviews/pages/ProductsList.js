@@ -15,40 +15,48 @@ import {
   CTableRow,
 } from '@coreui/react';
 import API_CONFIG from 'src/apiconfig';
-import { CChartDoughnut, CChartLine } from '@coreui/react-chartjs';
 import DeptProductCard from '../cards/DeptProductCard';
 import RequestProformaCard from '../cards/RequestProformaCard';
-import Select from 'react-select';
 import MultiSelect from '../input/MultiSelect';
 
 const ProductsList = () => {
   const [data, setData] = useState([]);
-  const [articles, setArticles] = useState([
-    {value: 1, label: "Article 1"},
-    {value: 2, label: "Article 2"},
-    {value: 3, label: "Article 3"},
-    {value: 4, label: "Article 4"}
-  ])
+  const [articles, setArticles] = useState([])
   const [selectedArticle, setSelectedArticle] = useState([])
 
   const test = [1,2,3,4,5]
 
+//   useEffect(() => {
+//     fetch(API_CONFIG.REQUEST_DETAILS)
+//       .then(res => res.json())
+//       .then(res => {
+//         const fakeData = []
+//         res.data.forEach(element => {
+//           fakeData.push({
+//             produit: element.product.productName,
+//             departement: element.departmentName,
+//             quantite: element.quantity
+//           })
+//         });
+//         console.log(fakeData)
+//         setData(fakeData)
+//       })
+// }, []);
   useEffect(() => {
-    fetch(API_CONFIG.REQUEST_DETAILS)
+    fetch(API_CONFIG.ALL_PRODUCT)
       .then(res => res.json())
       .then(res => {
         const fakeData = []
         res.data.forEach(element => {
           fakeData.push({
-            produit: element.product.productName,
-            departement: element.departmentName,
-            quantite: element.quantity
+            value: element.productId,
+            label: element.productName
           })
         });
         console.log(fakeData)
-        setData(fakeData)
+        setArticles(fakeData)
       })
-}, []);
+  }, []);
 
   const handleMultiSelect=(selected)=>{
     setSelectedArticle(selected);

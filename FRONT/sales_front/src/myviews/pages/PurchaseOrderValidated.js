@@ -5,7 +5,6 @@ import API_CONFIG from 'src/apiconfig';
 import { toLetter } from 'src/utils/util';
 
 const PurchaseOrder = ({ order }) => {
-
   return (
     <CRow>
         <CCol xs={3}>
@@ -87,7 +86,6 @@ const calculateTotal = (purchaseOrderDetails) => {
 const PurchaseOrderList = () =>
 {
   const [data, setData] = useState([]);
-
     useEffect(()=>{
       fetch(API_CONFIG.PURCHASE_ORDERS_VALIDATED)
       .then(res => res.json())

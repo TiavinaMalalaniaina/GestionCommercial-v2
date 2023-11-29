@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
-import { CContainer, CCard, CCardBody, CCardHeader, CTable, CTableBody, CTableDataCell, CTableHead, CTableRow, CTableHeaderCell, CButton, CCardTitle, CRow, CCol } from '@coreui/react';
+import { CContainer, CCard, CCardBody, CCardHeader, CTable, CTableBody, CTableDataCell, CTableHead, CTableRow, CTableHeaderCell, CButton, CCardTitle, CRow, CCol, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from '@coreui/react';
 import API_CONFIG from 'src/apiconfig';
 import { toLetter } from 'src/utils/util';
+import { useNavigate } from 'react-router-dom';
+import { hydrate } from 'react-dom';
 
-const PurchaseOrder = ({ order }) => {
-
-
-  const validate=(purchaseOrderId)=>{
-    fetch (API_CONFIG.PURCHASE_ORDERS_VALIDATION + "?purchase_order_id=" + purchaseOrderId)
-      .then(res => res.json())
-      .catch (error => console.log(error))
+const PurchaseOrder = ({ order, validate }) => {
+  const [visible, setVisible] = useState(false)
+  const [validationModal, setValidationModal] = useState(false)
+  const handleValidate=(purchaseOrderId)=>{
+    validate(purchaseOrderId)
+    setVisible(false)
+    setValidationModal(true)
   }
 
   return (
@@ -23,7 +25,43 @@ const PurchaseOrder = ({ order }) => {
             </CCol>
             <CCol>
               <CCardTitle className='text-end'>
-                <CButton onClick={() => validate(order.purchaseOrderId)}>Validé</CButton>
+                <CButton onClick={()=>setVisible(!visible)}>Validé</CButton>
+                <CModal
+                  visible={visible}
+                  onClose={() => setVisible(false)}
+                  aria-labelledby="LiveDemoExampleLabel"
+                >
+                  <CModalHeader onClose={() => setVisible(false)}>
+                    <CModalTitle id="LiveDemoExampleLabel">Validation du bon de commande</CModalTitle>
+                  </CModalHeader>
+                  <CModalBody>
+                    <h5>Etes-vous sûrs de vouloir valider ce bon de commande?</h5>
+                    <p>Ce bon de commande sera tout de suite envoyé à votre supérieur</p>
+                  </CModalBody>
+                  <CModalFooter>
+                    <CButton color="secondary" onClick={() => setVisible(false)}>
+                      Close
+                    </CButton>
+                    <CButton color="primary" onClick={() => handleValidate(order.purchaseOrderId)}>Validé</CButton>
+                  </CModalFooter>
+                </CModal>
+                <CModal
+                  visible={validationModal}
+                  onClose={() => setValidationModal(false)}
+                  aria-labelledby="LiveDemoExampleLabel"
+                >
+                  <CModalHeader onClose={() => setValidationModal(false)}>
+                    <CModalTitle id="LiveDemoExampleLabel"></CModalTitle>
+                  </CModalHeader>
+                  <CModalBody>
+                    <h5>Le bon de commande a été envoyé vers votre supérieur</h5>
+                  </CModalBody>
+                  <CModalFooter>
+                    <CButton color="secondary" onClick={() => setValidationModal(false)}>
+                      Close
+                    </CButton>
+                  </CModalFooter>
+                </CModal>
               </CCardTitle>
             </CCol>
           </CRow>
@@ -84,28 +122,29 @@ const PurchaseOrderList = () =>
 {
   const [data, setData] = useState([]);
   const [order, setOrder]  = useState(null)
-  const [isHovered, setIsHovered] = useState(null)
 
-    useEffect(()=>{
-      fetch(API_CONFIG.PURCHASE_ORDERS_NO_VALIDATED)
-      .then(res => res.json())
-      .then(res => {
-        console.log(res.data)
-        setData(res.data)
-      })
+  const updateData=()=>{
+    fetch(API_CONFIG.PURCHASE_ORDERS_NO_VALIDATED)
+    .then(res => res.json())
+    .then(res => {
+      console.log(res.data)
+      setData(res.data)
+    })
+  }
+
+  useEffect(()=>{
+    updateData()
     },[])
-
     const handleClickRow=(index)=> {
       setOrder(data[index])
     }
 
-    const handleMouseEnter = (index) => {
-      setIsHovered(index);
-    };
-
-    const handleMouseLeave = () => {
-      setIsHovered(null);
-    };
+    const validate=(purchaseOrderId)=>{
+      fetch (API_CONFIG.PURCHASE_ORDERS_VALIDATION + "?purchase_order_id=" + purchaseOrderId)
+      .then(res => res.json())
+      .then(res => updateData())
+      .catch (error => console.log(error))
+    }
 
     return (
 
@@ -126,7 +165,7 @@ const PurchaseOrderList = () =>
                 <CTableBody>
                 {data.map((purchaseOrder, index) => (
                   <CTableRow key={index}
-                  onClick={() => handleClickRow(index)}
+                    onClick={() => handleClickRow(index)}
                   >
                     <CTableDataCell>{purchaseOrder.purchaseOrderId}</CTableDataCell>
                     <CTableDataCell>{purchaseOrder.createdAt.substring(0, 10)}</CTableDataCell>
@@ -139,7 +178,7 @@ const PurchaseOrderList = () =>
           </CCard>
         </CCol>
           <CCol>
-          {order !== null && <PurchaseOrder order={order} />}
+            {order !== null && <PurchaseOrder order={order} validate={validate} />}
           </CCol>
           </CRow>
         </CContainer>

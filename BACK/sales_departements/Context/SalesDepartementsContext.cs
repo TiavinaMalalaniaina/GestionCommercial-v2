@@ -44,7 +44,7 @@ public partial class SalesDepartementsContext : DbContext
     public virtual DbSet<VRequestCurve> VRequestCurves { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=sales_departement;Username=postgres;Password=Etu002057");
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=sales_departement;Username=postgres;Password=malalaniaina");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

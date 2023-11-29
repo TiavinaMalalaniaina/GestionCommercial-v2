@@ -87,6 +87,7 @@ public partial class PurchaseOrder
                 purchaseOrder.SupplierId = proforma.SupplierId;
                 
                 context.PurchaseOrders.Add(purchaseOrder);
+                context.SaveChanges();
                 string purchaseOrderId = purchaseOrder.PurchaseOrderId;
                 
                 List<ProformaDetail> proformaDetails = (List<ProformaDetail>) proforma.ProformaDetails;
@@ -96,6 +97,7 @@ public partial class PurchaseOrder
                     purchaseOrderDetail.PurchaseOrderId = purchaseOrderId;
                     context.PurchaseOrderDetails.Add(purchaseOrderDetail);
                 }
+                context.SaveChanges();
             }
             scope.Complete();
         }

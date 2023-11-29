@@ -7,8 +7,7 @@ import API_CONFIG from "src/apiconfig"
         if (index==-1) return <CBadge color="danger">Refusé</CBadge>
         if (index==1) return <CBadge color="primary">Validé</CBadge>
         if (index==0) return <CBadge color="warning">En attente</CBadge>
-        if (index==2) return <CBadge color="success">Commandé</CBadge>
-        else {}
+        else return <CBadge color="primary">Validé</CBadge>
       }
 
       const [data, setData] = useState([])

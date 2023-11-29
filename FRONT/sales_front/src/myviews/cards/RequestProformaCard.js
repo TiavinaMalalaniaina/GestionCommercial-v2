@@ -91,7 +91,7 @@ const RequestProformaCard = ({ proforma }) => {
                     color="danger"
                     onClick={() => handleRemoveProduct(produit.id)}
                   >
-                    <CIcon icon={cilMedicalCross} />
+                    <CIcon icon={cilTrash} />
                   </CButton>
                 </CTableDataCell>
               </CTableRow>
