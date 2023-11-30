@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Aspose.Pdf" Version="23.11.1" />
+    <PackageReference Include="EASendMail" Version="7.9.2" />
+    <PackageReference Include="itext7" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

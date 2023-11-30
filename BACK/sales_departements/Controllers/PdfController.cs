@@ -1,34 +1,52 @@
-﻿
-using Aspose.Pdf;
+﻿using Aspose.Pdf;
 using Microsoft.AspNetCore.Mvc;
+using sales_departements.Context;
 using sales_departements.Models;
+using sales_departements.Models.pdf;
 
 namespace sales_departements.Controllers
 {
     [Route ("pdf")]
     public class PdfController : Controller
     {
-        // private readonly ExportPdf _pdfService;
-
-        // public PdfController(ExportPdf pdfService)
-        // {
-        //     _pdfService = pdfService;
-        // }
 
 
         [HttpGet]
-        [Route("create-table")]
-        public IActionResult CreatePdfWithTable()
+        [Route("create")]
+        public ActionResult CreatePdfWithTable(string supplierId, List<string> requestDetailsString)
         {
-            ExportPdf exportPdf = new ExportPdf();
-            var pdfPath = "/home/mirlin/ITUniversity/Projets/S5/Mr_Tovo/PDF/file/document.pdf";
-            var imagePath = "/home/mirlin/ITUniversity/Projets/S5/Mr_Tovo/PDF/file/logo.jpg";
-            exportPdf.CreatePdf(pdfPath, "");
-            exportPdf.CreatePdfWithImage(pdfPath, imagePath);
-            exportPdf.CreatePdfWithTable(pdfPath);
+            string? exception = null;
+            object? data = null;
+            try
+            {
+                SalesDepartementsContext context = new ();
+                Supplier supplier = new Supplier().GetSupplier(context, supplierId);
+                List<RequestDetail> requestDetails = new RequestDetail().GetRequestDetailsByListString(context, requestDetailsString);
 
-            return PhysicalFile(pdfPath, "application/pdf", "document.pdf");
+                ExportPdf exportPdf = new ExportPdf();
+
+                var pdfPath = "D:/ITUniversity/Projets/S5/Mr Tovo/SALES/document.pdf";
+                var imagePath = "D:/ITUniversity/Projets/S5/Mr Tovo/SALES/logo.jpg";
+
+                exportPdf.CreatePdf(pdfPath, "");
+                //exportPdf.CreatePdfWithImage(pdfPath, imagePath);
+                Document document = new Document();
+                Page page = document.Pages.Add();
+
+                exportPdf.AddCompanyInformation(context, supplier, pdfPath, document, page);
+                exportPdf.CreateTable(pdfPath, document, page, requestDetails);
+                exportPdf.Text(pdfPath, document, page, supplier.Name, "info", "ordi cahier stylo");
+                return PhysicalFile(pdfPath, "application/pdf", "document.pdf");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+           
+
+            return null;
         }
+        
 
 
     }
