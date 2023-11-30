@@ -23,7 +23,25 @@ public partial class RequestDetail
     public virtual string? DepartmentName { get; set; }
 
     // public virtual Request? Request { get; set; }
+    
+    public List<RequestDetail> GetRequestDetailsByListString(SalesDepartementsContext context, List<string> requestDetailsString) {
+        List<RequestDetail> requestDetails = new List<RequestDetail>();
+        foreach(string item in requestDetailsString) {
+            string[] strings = item.Split(";");
+            string productId = strings[0];
+            int quantity = int.Parse(strings[1]);
 
+            Product product = new Product().GetProduct(context, productId);
+
+            RequestDetail requestDetail = new RequestDetail();
+            requestDetail.ProductId = productId;
+            requestDetail.Product = product;
+            requestDetail.Quantity = quantity;
+            requestDetails.Add(requestDetail);
+        }
+
+        return requestDetails;
+    }
     public RequestDetail() {
 
     }

@@ -1,4 +1,5 @@
-using sales_departements.Models;
+
+using sales_departements.Models.pdf;
 
 var builder = WebApplication.CreateBuilder(args);
 
