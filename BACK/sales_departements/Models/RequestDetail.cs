@@ -42,6 +42,14 @@ public partial class RequestDetail
 
         return requestDetails;
     }
+
+    public string ConvertToString(List<RequestDetail> requestDetails) {
+        string productName = "";
+        foreach(RequestDetail requestDetail in requestDetails) {
+            productName += requestDetail.Product.ProductName+" , ";
+        }
+        return productName;
+    }
     public RequestDetail() {
 
     }

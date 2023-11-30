@@ -21,7 +21,8 @@ namespace sales_departements.Controllers
             {
                 SalesDepartementsContext context = new ();
                 Supplier supplier = new Supplier().GetSupplier(context, supplierId);
-                List<RequestDetail> requestDetails = new RequestDetail().GetRequestDetailsByListString(context, requestDetailsString);
+                RequestDetail requestDetail = new RequestDetail();
+                List<RequestDetail> requestDetails = requestDetail.GetRequestDetailsByListString(context, requestDetailsString);
 
                 ExportPdf exportPdf = new ExportPdf();
 
@@ -35,7 +36,7 @@ namespace sales_departements.Controllers
 
                 exportPdf.AddCompanyInformation(context, supplier, pdfPath, document, page);
                 exportPdf.CreateTable(pdfPath, document, page, requestDetails);
-                exportPdf.Text(pdfPath, document, page, supplier.Name, "info", "ordi cahier stylo");
+                exportPdf.Text(pdfPath, document, page, supplier.Name, "info", requestDetail.ConvertToString(requestDetails));
                 return PhysicalFile(pdfPath, "application/pdf", "document.pdf");
             }
             catch (Exception e)
